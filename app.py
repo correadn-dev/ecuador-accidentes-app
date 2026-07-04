@@ -9,37 +9,19 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ── Bootstrap Icons CDN + estilos ─────────────────────────────────────────────
 st.markdown("""
 <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
-/* sidebar oscuro + ancho reducido */
+/* sidebar: ancho + gradiente sobre el fondo del theme */
 section[data-testid="stSidebar"] {
     width: 200px !important;
     min-width: 200px !important;
 }
 section[data-testid="stSidebar"] > div:first-child {
-    width: 210px !important;
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    width: 200px !important;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
     padding: 1.5rem 1rem;
-}
-/* botón toggle sidebar: kind="headerNoPadding" es el valor que Streamlit usa */
-button[kind="headerNoPadding"],
-[data-testid="stSidebarCollapseButton"] button,
-section[data-testid="stSidebar"] button:not([kind="primary"]):not([kind="secondary"]) {
-    background: rgba(255,255,255,0.1) !important;
-    border: 1px solid rgba(255,255,255,0.18) !important;
-    border-radius: 8px !important;
-    color: #e2e8f0 !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-}
-button[kind="headerNoPadding"] svg,
-[data-testid="stSidebarCollapseButton"] svg,
-section[data-testid="stSidebar"] button:not([kind="primary"]):not([kind="secondary"]) svg {
-    fill: #e2e8f0 !important;
-    color: #e2e8f0 !important;
 }
 /* botones nav: base inactivo */
 section[data-testid="stSidebar"] .stButton > button {
@@ -64,7 +46,6 @@ section[data-testid="stSidebar"] .stButton > button:focus {
     box-shadow: none !important;
     outline: none !important;
 }
-/* boton activo */
 section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
     background: #1d4ed8 !important;
     color: #ffffff !important;
@@ -73,15 +54,9 @@ section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
     background: #2563eb !important;
     color: #ffffff !important;
 }
-/* botones nav: texto e icono alineados a la izquierda */
-section[data-testid="stSidebar"] .stButton button [data-testid="stIconMaterial"],
-section[data-testid="stSidebar"] .stButton button p {
-    color: inherit !important;
-}
 section[data-testid="stSidebar"] .stButton button [data-testid="stIconMaterial"] {
     font-size: 18px !important;
 }
-/* metricas */
 [data-testid="stMetric"] {
     background: #f8fafc; border: 1px solid #e2e8f0;
     border-radius: 10px; padding: 14px 18px;
@@ -89,19 +64,13 @@ section[data-testid="stSidebar"] .stButton button [data-testid="stIconMaterial"]
 [data-testid="stMetricValue"] { font-size: 1.4rem !important; font-weight: 700; }
 [data-testid="stMetricLabel"] { font-size: 0.76rem !important; color: #64748b; }
 .block-container { padding-top: 2rem; }
-section[data-testid="stSidebar"] .stCaption,
-section[data-testid="stSidebar"] small,
-section[data-testid="stSidebar"] .stCaption div { color: #94a3b8 !important; }
-section[data-testid="stSidebar"] h3 { color: #f1f5f9 !important; margin-bottom: 4px; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── datos (cacheados) ──────────────────────────────────────────────────────────
+# ── datos ──────────────────────────────────────────────────────────────────────
 (summary, monthly, metrics, preds, forecast,
  by_hour, by_day, clusters, by_prov, by_type, top_cant) = load_all()
 
-# ── navegacion via session_state (sin reload de pagina) ───────────────────────
-# \uF... = Bootstrap Icons PUA unicode (rendered via font-family cascade in CSS)
 NAV_ITEMS = [
     ("resumen",     ":material/bar_chart:",   "Resumen"),
     ("hotspots",    ":material/location_on:", "Hotspots"),
@@ -144,7 +113,6 @@ with st.sidebar:
 
 page = st.session_state.page
 
-# ── render pagina activa ───────────────────────────────────────────────────────
 if page == "resumen":
     resumen.render(monthly, metrics, forecast)
 elif page == "hotspots":
