@@ -26,10 +26,11 @@ section[data-testid="stSidebar"] > div {
 section[data-testid="stSidebar"] > div:first-child {
     padding: 1.5rem 1rem;
 }
-/* CSS fallback para toggle - sin ancestro sidebar por si está fuera del DOM tree */
+/* toggle button: fondo ligeramente más claro que sidebar para que sea visible */
 [data-testid="stSidebarCollapseButton"] {
-    background: #0f172a !important;
-    background-color: #0f172a !important;
+    background: rgba(255,255,255,0.12) !important;
+    background-color: rgba(255,255,255,0.12) !important;
+    border-radius: 8px !important;
 }
 [data-testid="stSidebarCollapseButton"] button,
 [data-testid="stSidebarCollapseButton"] button:hover,
@@ -45,7 +46,7 @@ section[data-testid="stSidebar"] > div:first-child {
 [data-testid="stSidebarCollapseButton"] svg path,
 button[kind="headerNoPadding"] svg,
 button[data-testid="stBaseButton-headerNoPadding"] svg {
-    fill: #94a3b8 !important;
+    fill: #e2e8f0 !important;
 }
 /* botones nav */
 section[data-testid="stSidebar"] .stButton > button {
@@ -139,8 +140,8 @@ with st.sidebar:
     components.html("""
 <script>
 (function run() {
-    var DARK = '#0f172a';
-    var ICON = '#94a3b8';
+    var DARK = 'rgba(255,255,255,0.12)';
+    var ICON = '#e2e8f0';
     function patch() {
         try {
             var doc = window.parent.document;
