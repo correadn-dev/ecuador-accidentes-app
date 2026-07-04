@@ -4,7 +4,7 @@ from views import resumen, hotspots, pronostico, exploracion
 
 st.set_page_config(
     page_title="Ecuador Vial · Dashboard",
-    page_icon="🚦",
+    page_icon=":material/traffic:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
