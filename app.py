@@ -51,10 +51,13 @@ section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
     background: #2563eb !important;
     color: #ffffff !important;
 }
-/* Bootstrap Icons font cascade: PUA chars (icons) → bootstrap-icons, ASCII → system-ui */
-section[data-testid="stSidebar"] .stButton button,
+/* botones nav: texto e icono alineados a la izquierda */
+section[data-testid="stSidebar"] .stButton button [data-testid="stIconMaterial"],
 section[data-testid="stSidebar"] .stButton button p {
-    font-family: "bootstrap-icons", system-ui, -apple-system, sans-serif !important;
+    color: inherit !important;
+}
+section[data-testid="stSidebar"] .stButton button [data-testid="stIconMaterial"] {
+    font-size: 18px !important;
 }
 /* metricas */
 [data-testid="stMetric"] {
@@ -76,10 +79,10 @@ section[data-testid="stSidebar"] h3 { color: #f1f5f9 !important; margin-bottom: 
 # ── navegacion via session_state (sin reload de pagina) ───────────────────────
 # \uF... = Bootstrap Icons PUA unicode (rendered via font-family cascade in CSS)
 NAV_ITEMS = [
-    ("resumen",     "  Resumen"),
-    ("hotspots",    "  Hotspots"),
-    ("pronostico",  "  Pronostico"),
-    ("exploracion", "  Exploracion"),
+    ("resumen",     ":material/bar_chart:",   "Resumen"),
+    ("hotspots",    ":material/location_on:", "Hotspots"),
+    ("pronostico",  ":material/show_chart:",  "Pronostico"),
+    ("exploracion", ":material/search:",      "Exploracion"),
 ]
 
 if "page" not in st.session_state:
@@ -94,10 +97,10 @@ with st.sidebar:
     st.caption("Analisis Espaciotemporal - ANT 2017-2024")
     st.markdown("<br>", unsafe_allow_html=True)
 
-    for key, label in NAV_ITEMS:
+    for key, icon, label in NAV_ITEMS:
         active = st.session_state.page == key
         if st.button(
-            label,
+            label, icon=icon,
             key="nav_" + key,
             type="primary" if active else "secondary",
             use_container_width=True,
