@@ -24,28 +24,25 @@ section[data-testid="stSidebar"] > div:first-child {
     background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     padding: 1.5rem 1rem;
 }
-/* botón colapsar/expandir sidebar */
-section[data-testid="stSidebar"] button[data-testid="baseButton-headerNoPadding"],
+/* botón colapsar sidebar — múltiples selectores para cubrir versiones */
 [data-testid="stSidebarCollapseButton"] button,
-section[data-testid="stSidebar"] > div:last-child button {
-    background: rgba(148,163,184,0.12) !important;
-    border: 1px solid rgba(148,163,184,0.25) !important;
+[data-testid="collapsedControl"] button,
+section[data-testid="stSidebar"] > div > button {
+    background: rgba(148,163,184,0.15) !important;
+    border: 1px solid rgba(148,163,184,0.3) !important;
     border-radius: 8px !important;
-    color: #94a3b8 !important;
-    width: 32px !important;
-    height: 32px !important;
-    padding: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-section[data-testid="stSidebar"] > div:last-child button:hover {
-    background: rgba(148,163,184,0.25) !important;
     color: #e2e8f0 !important;
+    padding: 4px 8px !important;
 }
-/* icono SVG del botón toggle */
-section[data-testid="stSidebar"] > div:last-child button svg {
-    fill: #94a3b8 !important;
+[data-testid="stSidebarCollapseButton"] button:hover,
+section[data-testid="stSidebar"] > div > button:hover {
+    background: rgba(148,163,184,0.3) !important;
+}
+[data-testid="stSidebarCollapseButton"] svg,
+[data-testid="collapsedControl"] svg,
+section[data-testid="stSidebar"] > div > button svg {
+    fill: #e2e8f0 !important;
+    color: #e2e8f0 !important;
 }
 /* botones nav: base inactivo */
 section[data-testid="stSidebar"] .stButton > button {
@@ -95,7 +92,9 @@ section[data-testid="stSidebar"] .stButton button [data-testid="stIconMaterial"]
 [data-testid="stMetricValue"] { font-size: 1.4rem !important; font-weight: 700; }
 [data-testid="stMetricLabel"] { font-size: 0.76rem !important; color: #64748b; }
 .block-container { padding-top: 2rem; }
-section[data-testid="stSidebar"] .stCaption { color: #475569 !important; }
+section[data-testid="stSidebar"] .stCaption,
+section[data-testid="stSidebar"] small,
+section[data-testid="stSidebar"] .stCaption div { color: #94a3b8 !important; }
 section[data-testid="stSidebar"] h3 { color: #f1f5f9 !important; margin-bottom: 4px; }
 </style>
 """, unsafe_allow_html=True)
