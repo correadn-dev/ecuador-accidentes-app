@@ -34,14 +34,15 @@ def render(monthly, metrics, forecast):
     with col_b:
         st.subheader("RMSE por modelo")
         fig2 = px.bar(
-            metrics.sort_values("RMSE"), x="RMSE", y="Modelo",
+            metrics.sort_values("RMSE", ascending=False), x="RMSE", y="Modelo",
             orientation="h", color="Tipo", text="RMSE",
             color_discrete_map={"ML":"#3b82f6","DL":"#f59e0b","Estadístico":"#a855f7"},
+            title="RMSE — menor es mejor ↓",
         )
         fig2.update_traces(texttemplate="%{text:.1f}", textposition="inside",
                            insidetextanchor="end", textfont=dict(color="white"))
         fig2.update_layout(height=290, showlegend=False,
-                           margin=dict(l=0, r=10, t=10, b=0),
+                           margin=dict(l=0, r=10, t=35, b=0),
                            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
         st.plotly_chart(fig2, use_container_width=True)
 
