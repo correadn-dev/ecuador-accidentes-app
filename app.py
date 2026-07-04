@@ -32,16 +32,19 @@ section[data-testid="stSidebar"] > div:first-child,
 }
 section[data-testid="stSidebar"] * { color: #e8ecf4 !important; }
 
-/* option_menu: forzar fondo oscuro en el contenedor blanco */
-section[data-testid="stSidebar"] .nav-link,
-section[data-testid="stSidebar"] ul,
-section[data-testid="stSidebar"] li,
-section[data-testid="stSidebar"] .css-pkbazv,
-section[data-testid="stSidebar"] [class*="st-emotion-cache"] {
-    background-color: transparent !important;
-}
+/* eliminar vértices y bordes del iframe del option_menu */
 section[data-testid="stSidebar"] iframe {
     background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+}
+section[data-testid="stSidebar"] [data-testid="stCustomComponentV1"],
+section[data-testid="stSidebar"] [data-testid="stCustomComponentV1"] > div,
+section[data-testid="stSidebar"] div[class*="element-container"] {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background: transparent !important;
 }
 </style>
 """, unsafe_allow_html=True)
