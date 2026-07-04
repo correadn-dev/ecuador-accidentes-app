@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from utils import load_all
 from views import resumen, hotspots, pronostico, exploracion
 
@@ -13,17 +14,40 @@ st.markdown("""
 <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
-/* sidebar: ancho + gradiente sobre el fondo del theme */
 section[data-testid="stSidebar"] {
     width: 200px !important;
     min-width: 200px !important;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
+}
+section[data-testid="stSidebar"] > div {
+    background: transparent !important;
+    width: 200px !important;
 }
 section[data-testid="stSidebar"] > div:first-child {
-    width: 200px !important;
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
     padding: 1.5rem 1rem;
 }
-/* botones nav: base inactivo */
+/* CSS fallback para toggle - sin ancestro sidebar por si está fuera del DOM tree */
+[data-testid="stSidebarCollapseButton"] {
+    background: #0f172a !important;
+    background-color: #0f172a !important;
+}
+[data-testid="stSidebarCollapseButton"] button,
+[data-testid="stSidebarCollapseButton"] button:hover,
+[data-testid="stSidebarCollapseButton"] button:focus,
+[data-testid="stSidebarCollapseButton"] button:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+[data-testid="stSidebarCollapseButton"] svg,
+[data-testid="stSidebarCollapseButton"] svg path,
+button[kind="headerNoPadding"] svg,
+button[data-testid="stBaseButton-headerNoPadding"] svg {
+    fill: #94a3b8 !important;
+}
+/* botones nav */
 section[data-testid="stSidebar"] .stButton > button {
     background: transparent !important;
     border: none !important;
@@ -110,6 +134,62 @@ with st.sidebar:
         '</div>',
         unsafe_allow_html=True,
     )
+
+    # JS inline-style override: los estilos inline con !important ganan sobre emotion CSS
+    components.html("""
+<script>
+(function run() {
+    var DARK = '#0f172a';
+    var ICON = '#94a3b8';
+    function patch() {
+        try {
+            var doc = window.parent.document;
+            // contenedor del botón
+            ['[data-testid="stSidebarCollapseButton"]',
+             '[data-testid="collapsedControl"]'].forEach(function(sel) {
+                doc.querySelectorAll(sel).forEach(function(el) {
+                    el.style.setProperty('background', DARK, 'important');
+                    el.style.setProperty('background-color', DARK, 'important');
+                    el.style.setProperty('border', 'none', 'important');
+                    el.style.setProperty('box-shadow', 'none', 'important');
+                });
+            });
+            // el <button> dentro del contenedor
+            ['[data-testid="stSidebarCollapseButton"] button',
+             '[data-testid="collapsedControl"] button',
+             'button[kind="headerNoPadding"]',
+             'button[data-testid="stBaseButton-headerNoPadding"]'].forEach(function(sel) {
+                doc.querySelectorAll(sel).forEach(function(btn) {
+                    btn.style.setProperty('background', 'transparent', 'important');
+                    btn.style.setProperty('background-color', 'transparent', 'important');
+                    btn.style.setProperty('border', 'none', 'important');
+                    btn.style.setProperty('box-shadow', 'none', 'important');
+                    btn.style.setProperty('outline', 'none', 'important');
+                });
+            });
+            // SVG icon
+            doc.querySelectorAll(
+                '[data-testid="stSidebarCollapseButton"] svg, ' +
+                '[data-testid="collapsedControl"] svg, ' +
+                'button[kind="headerNoPadding"] svg'
+            ).forEach(function(s) {
+                s.style.setProperty('fill', ICON, 'important');
+                s.querySelectorAll('path').forEach(function(p) {
+                    p.style.setProperty('fill', ICON, 'important');
+                });
+            });
+        } catch(e) { /* cross-origin bloqueado — CSS fallback activo */ }
+    }
+    patch();
+    [200, 600, 1500, 3000].forEach(function(t) { setTimeout(patch, t); });
+    try {
+        new MutationObserver(patch).observe(
+            window.parent.document.body, {childList:true, subtree:true}
+        );
+    } catch(e) {}
+})();
+</script>
+""", height=0)
 
 page = st.session_state.page
 
