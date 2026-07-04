@@ -24,31 +24,22 @@ section[data-testid="stSidebar"] > div:first-child {
     background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     padding: 1.5rem 1rem;
 }
-/* botón toggle sidebar: múltiples selectores */
+/* botón toggle sidebar: kind="headerNoPadding" es el valor que Streamlit usa */
+button[kind="headerNoPadding"],
 [data-testid="stSidebarCollapseButton"] button,
-[data-testid="collapsedControl"] button,
-button[aria-label="Close sidebar"],
-button[aria-label="Collapse sidebar"],
-button[title="Close sidebar"] {
+section[data-testid="stSidebar"] button:not([kind="primary"]):not([kind="secondary"]) {
     background: rgba(255,255,255,0.1) !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
     border-radius: 8px !important;
     color: #e2e8f0 !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
 }
+button[kind="headerNoPadding"] svg,
 [data-testid="stSidebarCollapseButton"] svg,
-[data-testid="collapsedControl"] svg,
-button[aria-label="Close sidebar"] svg,
-button[aria-label="Collapse sidebar"] svg {
+section[data-testid="stSidebar"] button:not([kind="primary"]):not([kind="secondary"]) svg {
     fill: #e2e8f0 !important;
     color: #e2e8f0 !important;
-}
-/* botón expandir (sidebar cerrado) */
-button[aria-label="Open sidebar"],
-button[aria-label="Expand sidebar"] {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
-    border-radius: 8px !important;
-    color: #94a3b8 !important;
 }
 /* botones nav: base inactivo */
 section[data-testid="stSidebar"] .stButton > button {
