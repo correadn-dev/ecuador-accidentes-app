@@ -22,8 +22,27 @@ st.markdown("""
 [data-testid="stMetricValue"] { font-size: 1.4rem !important; }
 [data-testid="stMetricLabel"] { font-size: 0.78rem !important; }
 .block-container { padding-top: 1.5rem; }
-section[data-testid="stSidebar"] { background-color: #1a1f2e; }
+
+/* sidebar completo oscuro */
+section[data-testid="stSidebar"],
+section[data-testid="stSidebar"] > div,
+section[data-testid="stSidebar"] > div:first-child,
+[data-testid="stSidebarContent"] {
+    background-color: #1a1f2e !important;
+}
 section[data-testid="stSidebar"] * { color: #e8ecf4 !important; }
+
+/* option_menu: forzar fondo oscuro en el contenedor blanco */
+section[data-testid="stSidebar"] .nav-link,
+section[data-testid="stSidebar"] ul,
+section[data-testid="stSidebar"] li,
+section[data-testid="stSidebar"] .css-pkbazv,
+section[data-testid="stSidebar"] [class*="st-emotion-cache"] {
+    background-color: transparent !important;
+}
+section[data-testid="stSidebar"] iframe {
+    background-color: transparent !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -65,12 +84,15 @@ with st.sidebar:
         icons=["bar-chart-fill", "geo-alt-fill", "graph-up-arrow", "search"],
         default_index=0,
         styles={
-            "container":       {"background-color": "transparent", "padding": "0"},
-            "icon":            {"color": "#7eb3ff", "font-size": "15px"},
-            "nav-link":        {"font-size": "14px", "color": "#cdd8f0",
-                                "border-radius": "8px", "margin": "2px 0"},
+            "container":         {"background-color": "#1a1f2e", "padding": "4px 0"},
+            "menu-title":        {"color": "#ffffff"},
+            "icon":              {"color": "#7eb3ff", "font-size": "15px"},
+            "nav-link":          {"font-size": "14px", "color": "#cdd8f0",
+                                  "border-radius": "8px", "margin": "2px 0",
+                                  "background-color": "transparent"},
             "nav-link-selected": {"background-color": "#2d3a5c", "color": "#ffffff",
                                   "font-weight": "600"},
+            "separator":         {"background-color": "#2d3a5c"},
         },
     )
     st.divider()
