@@ -14,10 +14,38 @@ st.markdown("""
 <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
-/* sidebar oscuro */
+/* sidebar oscuro + ancho reducido */
+section[data-testid="stSidebar"] {
+    width: 200px !important;
+    min-width: 200px !important;
+}
 section[data-testid="stSidebar"] > div:first-child {
+    width: 210px !important;
     background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     padding: 1.5rem 1rem;
+}
+/* botón colapsar/expandir sidebar */
+section[data-testid="stSidebar"] button[data-testid="baseButton-headerNoPadding"],
+[data-testid="stSidebarCollapseButton"] button,
+section[data-testid="stSidebar"] > div:last-child button {
+    background: rgba(148,163,184,0.12) !important;
+    border: 1px solid rgba(148,163,184,0.25) !important;
+    border-radius: 8px !important;
+    color: #94a3b8 !important;
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+section[data-testid="stSidebar"] > div:last-child button:hover {
+    background: rgba(148,163,184,0.25) !important;
+    color: #e2e8f0 !important;
+}
+/* icono SVG del botón toggle */
+section[data-testid="stSidebar"] > div:last-child button svg {
+    fill: #94a3b8 !important;
 }
 /* botones nav: base inactivo */
 section[data-testid="stSidebar"] .stButton > button {
