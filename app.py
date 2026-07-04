@@ -8,6 +8,7 @@ st.set_page_config(
     page_icon=":material/traffic:",
     layout="wide",
     initial_sidebar_state="expanded",
+    menu_items={},
 )
 
 st.markdown("""
@@ -129,53 +130,59 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    # Inyecta <style> directo en el head del documento padre
+    # Inline-style injection — inline styles beat emotion CSS regardless of specificity
     components.html("""
 <script>
 (function() {
-  var CSS = [
-    '[data-testid="stSidebarCollapseButton"] {',
-    '  background: rgba(255,255,255,0.18) !important;',
-    '  background-color: rgba(255,255,255,0.18) !important;',
-    '  border-radius: 8px !important;',
-    '  border: 1px solid rgba(255,255,255,0.3) !important;',
-    '}',
-    '[data-testid="stSidebarCollapseButton"] button,',
-    'button[kind="headerNoPadding"],',
-    'button[data-testid="stBaseButton-headerNoPadding"] {',
-    '  background: transparent !important;',
-    '  background-color: transparent !important;',
-    '  border: none !important;',
-    '  box-shadow: none !important;',
-    '  outline: none !important;',
-    '}',
-    '[data-testid="stSidebarCollapseButton"] svg,',
-    'button[kind="headerNoPadding"] svg,',
-    'button[data-testid="stBaseButton-headerNoPadding"] svg {',
-    '  fill: #ffffff !important;',
-    '}'
-  ].join('\\n');
-
-  function inject() {
+  function fixBtn() {
     try {
       var doc = window.parent.document;
-      var el = doc.getElementById('_ec_sidebar_fix');
-      if (!el) {
-        el = doc.createElement('style');
-        el.id = '_ec_sidebar_fix';
-        doc.head.appendChild(el);
+
+      // Wrapper div
+      var wrap = doc.querySelector('[data-testid="stSidebarCollapseButton"]');
+      if (wrap) {
+        wrap.style.background     = 'rgba(255,255,255,0.15)';
+        wrap.style.borderRadius   = '8px';
+        wrap.style.border         = '1px solid rgba(255,255,255,0.35)';
+        wrap.style.padding        = '3px';
+        wrap.style.margin         = '4px';
+        wrap.style.display        = 'flex';
+        wrap.style.alignItems     = 'center';
+        wrap.style.justifyContent = 'center';
       }
-      el.textContent = CSS;
+
+      // Inner <button>
+      var btn = doc.querySelector('[data-testid="stSidebarCollapseButton"] button');
+      if (btn) {
+        btn.style.background      = 'transparent';
+        btn.style.backgroundColor = 'transparent';
+        btn.style.boxShadow       = 'none';
+        btn.style.border          = 'none';
+        btn.style.outline         = 'none';
+      }
+
+      // SVG + paths
+      var nodes = doc.querySelectorAll(
+        '[data-testid="stSidebarCollapseButton"] svg, ' +
+        '[data-testid="stSidebarCollapseButton"] path'
+      );
+      for (var i = 0; i < nodes.length; i++) {
+        nodes[i].style.fill = '#ffffff';
+        nodes[i].setAttribute('fill', '#ffffff');
+      }
     } catch(e) {}
   }
 
-  inject();
-  setTimeout(inject, 300);
-  setTimeout(inject, 1000);
+  fixBtn();
+  [200, 600, 1500, 3000].forEach(function(t){ setTimeout(fixBtn, t); });
+
   try {
-    new MutationObserver(inject).observe(
-      window.parent.document.head, {childList: true}
+    var sidebar = window.parent.document.querySelector(
+      'section[data-testid="stSidebar"]'
     );
+    if (sidebar) {
+      new MutationObserver(fixBtn).observe(sidebar, {childList:true, subtree:true});
+    }
   } catch(e) {}
 })();
 </script>
