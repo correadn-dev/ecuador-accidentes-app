@@ -24,25 +24,31 @@ section[data-testid="stSidebar"] > div:first-child {
     background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     padding: 1.5rem 1rem;
 }
-/* botón colapsar sidebar — múltiples selectores para cubrir versiones */
+/* botón toggle sidebar: múltiples selectores */
 [data-testid="stSidebarCollapseButton"] button,
 [data-testid="collapsedControl"] button,
-section[data-testid="stSidebar"] > div > button {
-    background: rgba(148,163,184,0.15) !important;
-    border: 1px solid rgba(148,163,184,0.3) !important;
+button[aria-label="Close sidebar"],
+button[aria-label="Collapse sidebar"],
+button[title="Close sidebar"] {
+    background: rgba(255,255,255,0.1) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
     border-radius: 8px !important;
     color: #e2e8f0 !important;
-    padding: 4px 8px !important;
-}
-[data-testid="stSidebarCollapseButton"] button:hover,
-section[data-testid="stSidebar"] > div > button:hover {
-    background: rgba(148,163,184,0.3) !important;
 }
 [data-testid="stSidebarCollapseButton"] svg,
 [data-testid="collapsedControl"] svg,
-section[data-testid="stSidebar"] > div > button svg {
+button[aria-label="Close sidebar"] svg,
+button[aria-label="Collapse sidebar"] svg {
     fill: #e2e8f0 !important;
     color: #e2e8f0 !important;
+}
+/* botón expandir (sidebar cerrado) */
+button[aria-label="Open sidebar"],
+button[aria-label="Expand sidebar"] {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    color: #94a3b8 !important;
 }
 /* botones nav: base inactivo */
 section[data-testid="stSidebar"] .stButton > button {
@@ -117,12 +123,13 @@ if "page" not in st.session_state:
 
 with st.sidebar:
     st.markdown(
-        '<h3><i class="bi bi-car-front-fill" style="color:#3b82f6"></i>'
-        ' Ecuador Vial</h3>',
+        '<h3 style="color:#f1f5f9;margin-bottom:2px">'
+        '<i class="bi bi-car-front-fill" style="color:#3b82f6"></i>'
+        ' Ecuador Vial</h3>'
+        '<p style="color:#64748b;font-size:11px;margin:0 0 12px 0">'
+        'Análisis Espaciotemporal · ANT 2017–2024</p>',
         unsafe_allow_html=True,
     )
-    st.caption("Analisis Espaciotemporal - ANT 2017-2024")
-    st.markdown("<br>", unsafe_allow_html=True)
 
     for key, icon, label in NAV_ITEMS:
         active = st.session_state.page == key
@@ -135,9 +142,14 @@ with st.sidebar:
             st.session_state.page = key
             st.rerun()
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.caption("UDLA - ISWZ3402 AI-II")
-    st.caption("Gonzalez et al., Urban Science 2026")
+    st.markdown(
+        '<div style="margin-top:16px;border-top:1px solid #1e3a5f;padding-top:12px">'
+        '<p style="color:#64748b;font-size:11px;margin:0">UDLA · ISWZ3402 AI-II</p>'
+        '<p style="color:#64748b;font-size:11px;margin:4px 0 0 0">'
+        'González et al., <em>Urban Science</em> 2026</p>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
 
 page = st.session_state.page
 
