@@ -20,12 +20,13 @@ def render(clusters, top_cant):
                             ("Davies-Bouldin", "0.481"), ("En clusters", "92.0 %")]:
             st.metric(label, val)
         st.divider()
-        st.caption("**Top 10**")
-        st.dataframe(
-            clusters.head(10)[["rank", "accidentes"]]
-                     .rename(columns={"rank": "#", "accidentes": "Acc."}),
-            hide_index=True, use_container_width=True,
-        )
+        st.caption("**Top 10 hotspots**")
+        top10_cols = ["rank", "canton", "accidentes", "fallecidos"]
+        top10 = clusters.head(10)[top10_cols].rename(columns={
+            "rank": "#", "canton": "Cantón",
+            "accidentes": "Acc.", "fallecidos": "Fallec."
+        })
+        st.dataframe(top10, hide_index=True, use_container_width=True)
 
     with col_map:
         filt = clusters[clusters["accidentes"] >= min_acc].head(top_n)
