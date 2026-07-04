@@ -26,29 +26,24 @@ section[data-testid="stSidebar"] > div {
 section[data-testid="stSidebar"] > div:first-child {
     padding: 1.5rem 1rem;
 }
-/* toggle button: fondo ligeramente más claro que sidebar para que sea visible */
+/* Toggle button CSS fallback */
 [data-testid="stSidebarCollapseButton"] {
-    background: rgba(255,255,255,0.12) !important;
-    background-color: rgba(255,255,255,0.12) !important;
+    background: rgba(255,255,255,0.18) !important;
+    background-color: rgba(255,255,255,0.18) !important;
     border-radius: 8px !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
 }
-[data-testid="stSidebarCollapseButton"] button,
-[data-testid="stSidebarCollapseButton"] button:hover,
-[data-testid="stSidebarCollapseButton"] button:focus,
-[data-testid="stSidebarCollapseButton"] button:active {
+[data-testid="stSidebarCollapseButton"] button {
     background: transparent !important;
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    outline: none !important;
 }
 [data-testid="stSidebarCollapseButton"] svg,
-[data-testid="stSidebarCollapseButton"] svg path,
-button[kind="headerNoPadding"] svg,
-button[data-testid="stBaseButton-headerNoPadding"] svg {
-    fill: #e2e8f0 !important;
+button[kind="headerNoPadding"] svg {
+    fill: #ffffff !important;
 }
-/* botones nav */
+/* nav buttons */
 section[data-testid="stSidebar"] .stButton > button {
     background: transparent !important;
     border: none !important;
@@ -68,8 +63,7 @@ section[data-testid="stSidebar"] .stButton > button:hover {
     color: #e2e8f0 !important;
 }
 section[data-testid="stSidebar"] .stButton > button:focus {
-    box-shadow: none !important;
-    outline: none !important;
+    box-shadow: none !important; outline: none !important;
 }
 section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
     background: #1d4ed8 !important;
@@ -77,7 +71,6 @@ section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
 }
 section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
     background: #2563eb !important;
-    color: #ffffff !important;
 }
 section[data-testid="stSidebar"] .stButton button [data-testid="stIconMaterial"] {
     font-size: 18px !important;
@@ -136,58 +129,54 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    # JS inline-style override: los estilos inline con !important ganan sobre emotion CSS
+    # Inyecta <style> directo en el head del documento padre
     components.html("""
 <script>
-(function run() {
-    var DARK = 'rgba(255,255,255,0.12)';
-    var ICON = '#e2e8f0';
-    function patch() {
-        try {
-            var doc = window.parent.document;
-            // contenedor del botón
-            ['[data-testid="stSidebarCollapseButton"]',
-             '[data-testid="collapsedControl"]'].forEach(function(sel) {
-                doc.querySelectorAll(sel).forEach(function(el) {
-                    el.style.setProperty('background', DARK, 'important');
-                    el.style.setProperty('background-color', DARK, 'important');
-                    el.style.setProperty('border', 'none', 'important');
-                    el.style.setProperty('box-shadow', 'none', 'important');
-                });
-            });
-            // el <button> dentro del contenedor
-            ['[data-testid="stSidebarCollapseButton"] button',
-             '[data-testid="collapsedControl"] button',
-             'button[kind="headerNoPadding"]',
-             'button[data-testid="stBaseButton-headerNoPadding"]'].forEach(function(sel) {
-                doc.querySelectorAll(sel).forEach(function(btn) {
-                    btn.style.setProperty('background', 'transparent', 'important');
-                    btn.style.setProperty('background-color', 'transparent', 'important');
-                    btn.style.setProperty('border', 'none', 'important');
-                    btn.style.setProperty('box-shadow', 'none', 'important');
-                    btn.style.setProperty('outline', 'none', 'important');
-                });
-            });
-            // SVG icon
-            doc.querySelectorAll(
-                '[data-testid="stSidebarCollapseButton"] svg, ' +
-                '[data-testid="collapsedControl"] svg, ' +
-                'button[kind="headerNoPadding"] svg'
-            ).forEach(function(s) {
-                s.style.setProperty('fill', ICON, 'important');
-                s.querySelectorAll('path').forEach(function(p) {
-                    p.style.setProperty('fill', ICON, 'important');
-                });
-            });
-        } catch(e) { /* cross-origin bloqueado — CSS fallback activo */ }
-    }
-    patch();
-    [200, 600, 1500, 3000].forEach(function(t) { setTimeout(patch, t); });
+(function() {
+  var CSS = [
+    '[data-testid="stSidebarCollapseButton"] {',
+    '  background: rgba(255,255,255,0.18) !important;',
+    '  background-color: rgba(255,255,255,0.18) !important;',
+    '  border-radius: 8px !important;',
+    '  border: 1px solid rgba(255,255,255,0.3) !important;',
+    '}',
+    '[data-testid="stSidebarCollapseButton"] button,',
+    'button[kind="headerNoPadding"],',
+    'button[data-testid="stBaseButton-headerNoPadding"] {',
+    '  background: transparent !important;',
+    '  background-color: transparent !important;',
+    '  border: none !important;',
+    '  box-shadow: none !important;',
+    '  outline: none !important;',
+    '}',
+    '[data-testid="stSidebarCollapseButton"] svg,',
+    'button[kind="headerNoPadding"] svg,',
+    'button[data-testid="stBaseButton-headerNoPadding"] svg {',
+    '  fill: #ffffff !important;',
+    '}'
+  ].join('\\n');
+
+  function inject() {
     try {
-        new MutationObserver(patch).observe(
-            window.parent.document.body, {childList:true, subtree:true}
-        );
+      var doc = window.parent.document;
+      var el = doc.getElementById('_ec_sidebar_fix');
+      if (!el) {
+        el = doc.createElement('style');
+        el.id = '_ec_sidebar_fix';
+        doc.head.appendChild(el);
+      }
+      el.textContent = CSS;
     } catch(e) {}
+  }
+
+  inject();
+  setTimeout(inject, 300);
+  setTimeout(inject, 1000);
+  try {
+    new MutationObserver(inject).observe(
+      window.parent.document.head, {childList: true}
+    );
+  } catch(e) {}
 })();
 </script>
 """, height=0)
