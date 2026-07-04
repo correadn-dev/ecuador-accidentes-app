@@ -11,10 +11,10 @@ def render(monthly, metrics, forecast):
 
     c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Total accidentes", "166,682")
-    c2.metric("Período", "Ene 2017 – Abr 2024")
-    c3.metric("Hotspots DBSCAN", "457")
+    c2.metric("Período", "2017 – 2024")
+    c3.metric("Hotspots", "457 zonas")
     c4.metric("Cobertura", "92.0 %")
-    c5.metric("Mejor modelo", "RF · RMSE 132.2")
+    c5.metric("Mejor modelo", "RF  RMSE=132")
     st.markdown("<br>", unsafe_allow_html=True)
 
     col_a, col_b = st.columns([3, 2])
@@ -38,9 +38,10 @@ def render(monthly, metrics, forecast):
             orientation="h", color="Tipo", text="RMSE",
             color_discrete_map={"ML":"#3b82f6","DL":"#f59e0b","Estadístico":"#a855f7"},
         )
-        fig2.update_traces(texttemplate="%{text:.1f}", textposition="outside")
+        fig2.update_traces(texttemplate="%{text:.1f}", textposition="inside",
+                           insidetextanchor="end", textfont=dict(color="white"))
         fig2.update_layout(height=290, showlegend=False,
-                           margin=dict(l=0, r=40, t=10, b=0),
+                           margin=dict(l=0, r=10, t=10, b=0),
                            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
         st.plotly_chart(fig2, use_container_width=True)
 
