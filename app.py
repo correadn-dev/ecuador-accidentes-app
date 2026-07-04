@@ -51,18 +51,10 @@ section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
     background: #2563eb !important;
     color: #ffffff !important;
 }
-/* iconos Bootstrap Icons via CSS ::before (no hardcoded) */
-section[data-testid="stSidebar"] .stButton:nth-of-type(1) button::before {
-    font-family: "bootstrap-icons"; content: "\\F1B2"; margin-right: 8px;
-}
-section[data-testid="stSidebar"] .stButton:nth-of-type(2) button::before {
-    font-family: "bootstrap-icons"; content: "\\F3E0"; margin-right: 8px;
-}
-section[data-testid="stSidebar"] .stButton:nth-of-type(3) button::before {
-    font-family: "bootstrap-icons"; content: "\\F504"; margin-right: 8px;
-}
-section[data-testid="stSidebar"] .stButton:nth-of-type(4) button::before {
-    font-family: "bootstrap-icons"; content: "\\F52A"; margin-right: 8px;
+/* Bootstrap Icons font cascade: PUA chars (icons) → bootstrap-icons, ASCII → system-ui */
+section[data-testid="stSidebar"] .stButton button,
+section[data-testid="stSidebar"] .stButton button p {
+    font-family: "bootstrap-icons", system-ui, -apple-system, sans-serif !important;
 }
 /* metricas */
 [data-testid="stMetric"] {
@@ -82,11 +74,12 @@ section[data-testid="stSidebar"] h3 { color: #f1f5f9 !important; margin-bottom: 
  by_hour, by_day, clusters, by_prov, by_type, top_cant) = load_all()
 
 # ── navegacion via session_state (sin reload de pagina) ───────────────────────
+# \uF... = Bootstrap Icons PUA unicode (rendered via font-family cascade in CSS)
 NAV_ITEMS = [
-    ("resumen",     "Resumen"),
-    ("hotspots",    "Hotspots"),
-    ("pronostico",  "Pronostico"),
-    ("exploracion", "Exploracion"),
+    ("resumen",     "  Resumen"),
+    ("hotspots",    "  Hotspots"),
+    ("pronostico",  "  Pronostico"),
+    ("exploracion", "  Exploracion"),
 ]
 
 if "page" not in st.session_state:
@@ -110,6 +103,7 @@ with st.sidebar:
             use_container_width=True,
         ):
             st.session_state.page = key
+            st.rerun()
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.caption("UDLA - ISWZ3402 AI-II")

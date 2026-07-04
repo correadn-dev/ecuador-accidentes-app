@@ -19,14 +19,6 @@ def render(clusters, top_cant):
         for label, val in [("Clusters", "457"), ("Silhouette", "−0.059"),
                             ("Davies-Bouldin", "0.481"), ("En clusters", "92.0 %")]:
             st.metric(label, val)
-        st.divider()
-        st.caption("**Top 10 hotspots**")
-        top10_cols = ["rank", "canton", "accidentes", "fallecidos"]
-        top10 = clusters.head(10)[top10_cols].rename(columns={
-            "rank": "#", "canton": "Cantón",
-            "accidentes": "Acc.", "fallecidos": "Fallec."
-        })
-        st.dataframe(top10, hide_index=True, use_container_width=True)
 
     with col_map:
         filt = clusters[clusters["accidentes"] >= min_acc].head(top_n)
@@ -47,6 +39,24 @@ def render(clusters, top_cant):
             ).add_to(m)
         st_folium(m, height=500, use_container_width=True)
 
+    st.subheader("Top 10 hotspots — zonas de mayor riesgo")
+    top10_cols = ["rank", "canton", "accidentes", "fallecidos"]
+    top10 = clusters.head(10)[top10_cols].rename(columns={
+        "rank": "#", "canton": "Cantón",
+        "accidentes": "Accidentes", "fallecidos": "Fallecidos",
+    })
+    st.dataframe(
+        top10,
+        hide_index=True,
+        use_container_width=True,
+        column_config={
+            "#":           st.column_config.NumberColumn(width="small"),
+            "Cantón":      st.column_config.TextColumn(width="medium"),
+            "Accidentes":  st.column_config.NumberColumn(format="%d", width="medium"),
+            "Fallecidos":  st.column_config.NumberColumn(format="%d", width="medium"),
+        },
+    )
+    st.divider()
     st.subheader("Top cantones en hotspots")
     fig = px.bar(
         top_cant.head(15).sort_values("accidentes"),
