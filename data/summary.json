@@ -1,0 +1,12 @@
+{
+  "total_accidentes": 166682,
+  "periodo": "Enero 2017 – Abril 2024",
+  "meses": 88,
+  "media_mensual": 1894.1,
+  "max_mensual": 2676,
+  "min_mensual": 520,
+  "n_clusters": 457,
+  "pct_en_clusters": 92.0,
+  "best_model": "Random Forest",
+  "best_rmse": 132.2
+}
