@@ -62,7 +62,7 @@ if page not in PAGES:
     page = "resumen"
 
 with st.sidebar:
-    st.markdown("### 🚦 Ecuador Vial")
+    st.markdown('<h3 style="color:#f1f5f9"><i class="bi bi-car-front-fill" style="color:#3b82f6"></i> Ecuador Vial</h3>', unsafe_allow_html=True)
     st.caption("Análisis Espaciotemporal · ANT 2017–2024")
     st.markdown("<br>", unsafe_allow_html=True)
 
