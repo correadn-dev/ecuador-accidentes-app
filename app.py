@@ -83,6 +83,28 @@ section[data-testid="stSidebar"] .stButton button [data-testid="stIconMaterial"]
 [data-testid="stMetricValue"] { font-size: 1.4rem !important; font-weight: 700; }
 [data-testid="stMetricLabel"] { font-size: 0.76rem !important; color: #64748b; }
 .block-container { padding-top: 2rem; }
+/* number input fix */
+[data-testid="stNumberInput"] input {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+    border: 1px solid #334155 !important;
+    border-radius: 6px !important;
+}
+[data-testid="stNumberInput"] input:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.25) !important;
+}
+[data-testid="stNumberInputStepDown"],
+[data-testid="stNumberInputStepUp"] {
+    background: #334155 !important;
+    color: #f1f5f9 !important;
+    border: 1px solid #475569 !important;
+}
+[data-testid="stNumberInputStepDown"]:hover,
+[data-testid="stNumberInputStepUp"]:hover {
+    background: #3b82f6 !important;
+    border-color: #3b82f6 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
