@@ -28,7 +28,7 @@ def render(monthly, metrics, preds, forecast):
                           legend=dict(orientation="h", y=-0.15), **PLOT_CFG)
         st.plotly_chart(fig, use_container_width=True)
         a, b, c = st.columns(3)
-        a.metric("Media mensual", "1,893.8", help="Paper: 1,894.11 ✓")
+        a.metric("Media mensual", "1,894.1", help="Paper: 1,894.11 ✓")
         b.metric("Máximo", "2,676", help="Dic 2017")
         c.metric("Mínimo", "520",   help="Abr 2020 — COVID")
 
@@ -84,4 +84,4 @@ def render(monthly, metrics, preds, forecast):
         figf.update_traces(textposition="outside")
         figf.update_layout(height=340, legend_title="Riesgo", **PLOT_CFG)
         st.plotly_chart(figf, use_container_width=True)
-        st.error("**Enero 2025** — pico proyectado (~1,700 acc.).")
+        st.error("**Febrero 2025** — pico proyectado (~1,700 acc.).")

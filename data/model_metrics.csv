@@ -1,6 +1,6 @@
 Modelo,RMSE,MAE,Tipo
 Random Forest,132.2,92.74,ML
-XGBoost,135.91,95.32,ML
+XGBoost,130.96,89.85,ML
 LSTM,137.19,94.75,DL
 SARIMA,157.59,138.17,Estadístico
 Prophet,382.79,295.53,Estadístico
