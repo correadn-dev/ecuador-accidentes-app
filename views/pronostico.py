@@ -76,10 +76,13 @@ def render(monthly, metrics, preds, forecast):
                 "**Prophet** 382 vs paper 175 — sin corrección outliers COVID")
 
     with tab4:
+        forecast = forecast.sort_values("fecha")
         forecast["mes"] = forecast["fecha"].dt.strftime("%b %Y")
+        mes_order = forecast["mes"].tolist()
         figf = px.bar(
             forecast, x="mes", y="accidentes", color="nivel", text="accidentes",
             color_discrete_map={"Medio": "#22c55e", "Alto": "#f59e0b", "Crítico": "#ef4444"},
+            category_orders={"mes": mes_order},
         )
         figf.update_traces(textposition="outside")
         figf.update_layout(height=340, legend_title="Riesgo", **PLOT_CFG)

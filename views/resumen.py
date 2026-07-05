@@ -47,9 +47,12 @@ def render(monthly, metrics, forecast):
         st.plotly_chart(fig2, use_container_width=True)
 
     st.subheader("Pronóstico mayo 2024 – abril 2025")
+    forecast = forecast.sort_values("fecha")
     forecast["mes"] = forecast["fecha"].dt.strftime("%b %Y")
+    mes_order = forecast["mes"].tolist()
     fig3 = px.bar(forecast, x="mes", y="accidentes", color="nivel", text="accidentes",
-                  color_discrete_map={"Medio":"#22c55e","Alto":"#f59e0b","Crítico":"#ef4444"})
+                  color_discrete_map={"Medio":"#22c55e","Alto":"#f59e0b","Crítico":"#ef4444"},
+                  category_orders={"mes": mes_order})
     fig3.update_traces(textposition="outside")
     fig3.update_layout(height=260, legend_title="Riesgo", **PLOT_CFG)
     st.plotly_chart(fig3, use_container_width=True)
