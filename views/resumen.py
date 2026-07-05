@@ -6,7 +6,7 @@ from utils import PLOT_CFG
 
 def render(monthly, metrics, forecast):
     st.title("Accidentes de Tránsito — Ecuador")
-    st.markdown("Reproducción de **González-Rodríguez et al. (2026)** · *Urban Science 10(5), 280*")
+    st.markdown("Reproducción de **González-Rodríguez et al. (2026)** · *Urban Science 10(5), 280* · [doi:10.3390/urbansci10050280](https://doi.org/10.3390/urbansci10050280)")
     st.divider()
 
     c1, c2, c3, c4, c5 = st.columns(5)
