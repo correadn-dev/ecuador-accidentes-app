@@ -84,4 +84,4 @@ def render(monthly, metrics, preds, forecast):
         figf.update_traces(textposition="outside")
         figf.update_layout(height=340, legend_title="Riesgo", **PLOT_CFG)
         st.plotly_chart(figf, use_container_width=True)
-        st.error("**Febrero 2025** — pico proyectado (~1,700 acc.).")
+        st.error("**Enero 2025** — pico proyectado (~1,700 acc.).")

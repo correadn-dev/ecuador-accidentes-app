@@ -53,5 +53,5 @@ def render(monthly, metrics, forecast):
     fig3.update_traces(textposition="outside")
     fig3.update_layout(height=260, legend_title="Riesgo", **PLOT_CFG)
     st.plotly_chart(fig3, use_container_width=True)
-    st.error("**Febrero 2025 — mayor riesgo proyectado (~1,700 acc.).**  "
+    st.error("**Enero 2025 — mayor riesgo proyectado (~1,700 acc.).**  "
              "Reforzar operativos en los 457 hotspots identificados.")
