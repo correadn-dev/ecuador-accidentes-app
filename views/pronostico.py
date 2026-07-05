@@ -71,7 +71,7 @@ def render(monthly, metrics, preds, forecast):
             metrics.sort_values("RMSE").style.format({"RMSE": "{:.2f}", "MAE": "{:.2f}"}),
             hide_index=True, use_container_width=True,
         )
-        st.info("**RF** 132.20 < LSTM-Direct paper 137.47  ·  "
+        st.info("**XGBoost** 130.96 ★ mejor  ·  **RF** 132.20  ·  **LSTM** 137.19  |  "
                 "**SARIMA** 157.59 ≈ paper 157.94 ✓  ·  "
                 "**Prophet** 382 vs paper 175 — sin corrección outliers COVID")
 

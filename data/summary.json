@@ -7,6 +7,6 @@
   "min_mensual": 520,
   "n_clusters": 457,
   "pct_en_clusters": 92.0,
-  "best_model": "Random Forest",
-  "best_rmse": 132.2
+  "best_model": "XGBoost",
+  "best_rmse": 130.96
 }

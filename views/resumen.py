@@ -14,7 +14,7 @@ def render(monthly, metrics, forecast):
     c2.metric("Período", "2017 – 2024")
     c3.metric("Hotspots", "457 zonas")
     c4.metric("Cobertura", "92.0 %")
-    c5.metric("Mejor modelo", "RF  RMSE=132")
+    c5.metric("Mejor modelo", "XGB RMSE=131")
     st.markdown("<br>", unsafe_allow_html=True)
 
     col_a, col_b = st.columns([3, 2])
@@ -53,5 +53,5 @@ def render(monthly, metrics, forecast):
     fig3.update_traces(textposition="outside")
     fig3.update_layout(height=260, legend_title="Riesgo", **PLOT_CFG)
     st.plotly_chart(fig3, use_container_width=True)
-    st.error("**Enero 2025 — mayor riesgo proyectado (~1,700 acc.).**  "
+    st.error("**Febrero 2025 — mayor riesgo proyectado (~1,700 acc.).**  "
              "Reforzar operativos en los 457 hotspots identificados.")
