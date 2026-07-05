@@ -54,7 +54,8 @@ def render(monthly, metrics, forecast):
                   color_discrete_map={"Medio":"#22c55e","Alto":"#f59e0b","Crítico":"#ef4444"},
                   category_orders={"mes": mes_order})
     fig3.update_traces(textposition="outside")
-    fig3.update_layout(height=260, legend_title="Riesgo", **PLOT_CFG)
+    fig3.update_layout(height=260, legend_title="Riesgo",
+                       yaxis=dict(range=[0, 1900]), **PLOT_CFG)
     st.plotly_chart(fig3, use_container_width=True)
     st.error("**Enero 2025 — mayor riesgo proyectado (~1,700 acc.).**  "
              "Reforzar operativos en los 457 hotspots identificados.")
