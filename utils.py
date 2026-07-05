@@ -17,7 +17,7 @@ PLOT_CFG = dict(
     margin=dict(l=0, r=10, t=10, b=0),
 )
 
-@st.cache_data(show_spinner="Cargando datos…")
+@st.cache_data(show_spinner="Cargando datos…", ttl=3600)
 def load_all():
     d = Path("data")
     clusters = pd.read_csv(d / "cluster_centroids.csv")
